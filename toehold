@@ -2,7 +2,7 @@
 
 sudo apt-get install git-core
 
-localdir="$HOME/local"
+localdir="$HOME/cayuga"
 
 if [ -d "$localdir" ]; then
     rm -rf "$localdir"
@@ -11,6 +11,6 @@ fi
 cd $HOME
 git clone git@github.com:kixxauth/cayuga.git
 
-PATH="$HOME/local/bin:$PATH"
+PATH="$localdir/bin:$PATH"
 
 echo "OK - toehold is done"
