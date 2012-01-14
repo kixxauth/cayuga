@@ -1,6 +1,9 @@
 Setup the Kristoffer (cayuga) Box on Rackspace
 ==============================================
 
+Ubuntu
+------
+
 Using Ubuntu 10.04 LTS
 
 After starting the box on Rackspace, get the IP address and put it into the A
@@ -25,6 +28,9 @@ Login as root, update the instance, and install dependencies.
         git-core \
         tree
 
+Users
+-----
+
 Then, while still logged in as root, create a named user and a git user.  Use
 KeePass to generate the password and save it.
 
@@ -34,6 +40,9 @@ KeePass to generate the password and save it.
 Add the named user to the sudo group.
 
     adduser kris sudo
+
+SSH
+---
 
 Lockdown SSH. Edit the `/etc/ssh/sshd_config` file with
 
@@ -48,7 +57,13 @@ these users.
     ssh-copy-id kris@kristo.us
     ssh-copy-id git@kristo.us
 
+Snapshot Image
+--------------
+
 Check to make sure the users can login (except the root user), then [create an image](http://www.rackspace.com/knowledge_center/index.php/Creating_a_Cloud_Server_from_a_Backup_Image)
+
+Git Repositories
+----------------
 
 Set up the remote git repositories [(article)](http://tumblr.intranation.com/post/766290565/how-set-up-your-own-private-git-server-linux).
 First, make sure the repositories listed in `cayuga/conf/git_repos.list` is
@@ -59,3 +74,10 @@ correct.  Then run:
 Then set up local git repositories with a url like this: `git@kristo.us:myrepo.git`.
 
     git remote add origin git@kristo.us:myrepo.git
+
+Bitpocket
+---------
+
+On the server, simply create the Bitpocket master directory
+
+    mkdir /home/kris/Bitpocket_home_master
