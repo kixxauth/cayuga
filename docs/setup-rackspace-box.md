@@ -1,6 +1,7 @@
 Setup the Kristoffer (cayuga) Box on Rackspace
 ==============================================
 
+
 Ubuntu
 ------
 
@@ -28,6 +29,7 @@ Login as root, update the instance, and install dependencies.
         git-core \
         tree
 
+
 Users
 -----
 
@@ -40,6 +42,7 @@ KeePass to generate the password and save it.
 Add the named user to the sudo group.
 
     adduser kris sudo
+
 
 SSH
 ---
@@ -57,10 +60,24 @@ these users.
     ssh-copy-id kris@kristo.us
     ssh-copy-id git@kristo.us
 
+
 Snapshot Image
 --------------
 
 Check to make sure the users can login (except the root user), then [create an image](http://www.rackspace.com/knowledge_center/index.php/Creating_a_Cloud_Server_from_a_Backup_Image)
+
+It would probably be a good idea to do the Home Sync Directory (below) while
+logged in as the kris user.
+
+
+Home Sync Directory
+-------------------
+
+We need to create a directory specifically for the rysnc scripts which sync
+HOME between machines. While in the SSH term, do this:
+
+    mkdir /home/kris/Homesync
+
 
 Git Repositories
 ----------------
@@ -74,10 +91,3 @@ correct.  Then run:
 Then set up local git repositories with a url like this: `git@kristo.us:myrepo.git`.
 
     git remote add origin git@kristo.us:myrepo.git
-
-Bitpocket
----------
-
-On the server, simply create the Bitpocket master directory
-
-    mkdir /home/kris/Bitpocket_home_master
