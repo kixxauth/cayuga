@@ -1,9 +1,0 @@
-#!/bin/bash
-
-THISDIR="$(cd `dirname "$0"` && pwd)"
-ROOTDIR="$( dirname "$THISDIR" )"
-CONFDIR="$ROOTDIR/conf"
-
-REPOS="$( cat "$CONFDIR/git_repos.list" )"
-
-ssh git@kristo.us 'bash -s' < "$THISDIR/create_git_repos.sh" $REPOS

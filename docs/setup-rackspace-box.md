@@ -80,12 +80,4 @@ HOME between machines. While in the SSH term, do this:
 
 Git Repositories
 ----------------
-Set up the remote git repositories [(article)](http://tumblr.intranation.com/post/766290565/how-set-up-your-own-private-git-server-linux).
-First, make sure the repositories listed in `cayuga/conf/git_repos.list` is
-correct.  Then run:
-
-    cayuga/bin/create_remote_git_repos
-
-Then set up local git repositories with a url like this: `git@kristo.us:myrepo.git`.
-
-    git remote add origin git@kristo.us:myrepo.git
+Checkout the `docs/` for setting up git repos.
