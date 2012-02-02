@@ -2,37 +2,26 @@ Setup the Kristoffer (cayuga) Box on Rackspace
 ==============================================
 
 
-Ubuntu
-------
-
+Initial Rackspace Setup
+-----------------------
 Using Ubuntu 10.04 LTS
 
-After starting the box on Rackspace, get the IP address and put it into the A
-record on the zone file for kristo.us at DynDNS. Then put the new root password
-and IP address into the Rackspace entries in KeePassX.
+After starting the box on Rackspace, put the new root password and IP address
+into the Rackspace entries in KeePassX. Then get the IP address and put it into
+the A record on the zone file for kristo.us at DynDNS.
 
-Login as root, update the instance, and install dependencies.
+Login as root, and get a toehold on the machine.
 
     ssh -p 22 root@kristo.us
+    wget https://github.com/kixxauth/cayuga/raw/master/toehold
+    source toehold
 
-    sudo apt-get update
-    sudo apt-get dist-upgrade -m -y
-    sudo apt-get autoremove -m -y
-
-    sudo apt-get install \
-        openssh-server \
-        openssh-client \
-        build-essential \
-        screen \
-        curl \
-        vim \
-        git-core \
-        tree
+This will install git, clone a read-only copy of the cayuga repository, update
+Ubuntu, and install dependencies.
 
 
 Users
 -----
-
 Then, while still logged in as root, create a named user and a git user.  Use
 KeePass to generate the password and save it.
 
@@ -46,24 +35,35 @@ Add the named user to the sudo group.
 
 SSH
 ---
-
-Lockdown SSH. Edit the `/etc/ssh/sshd_config` file with
+Lockdown SSH. `sudo vim /etc/ssh/sshd_config` and add or change the following lines:
 
     Port 2575
     PermitRootLogin no
     AllowUsers git kris
 
-Restart the server, then back on the local box (the development VM); add the
-SSH keys. But, check the local .ssh/conf first to make sure entries exist for
-these users.
+Restart the machine and then back on a local box, copy the SSH keys to the new
+private server for the users who should be permitted to login.
 
-    ssh-copy-id kris@kristo.us
-    ssh-copy-id git@kristo.us
+!GOTCHA:
+When using ssh-copy-id to copy keys to the new server, the `~/.ssh/config` file
+needs to be setup properly to make the transfer for each user. Use this as an
+example:
+
+    Host kristo.us
+      HostName kristo.us
+      User kris
+      IdentityFile ~/.ssh/id_rsa
+      Port 2575
+
+Also, specify the `-i` option, otherwise all the IDs in `~/.ssh/` will be
+transferred (see the ssh-copy-id man page).
+
+    ssh-copy-id -i ~/.ssh/id_rsa kris@kristo.us
+    ssh-copy-id -i ~/.ssh/id_rsa git@kristo.us
 
 
 Snapshot Image
 --------------
-
 Check to make sure the users can login (except the root user), then [create an image](http://www.rackspace.com/knowledge_center/index.php/Creating_a_Cloud_Server_from_a_Backup_Image)
 
 It would probably be a good idea to do the Home Sync Directory (below) while
@@ -72,7 +72,6 @@ logged in as the kris user.
 
 Home Sync Directory
 -------------------
-
 We need to create a directory specifically for the rysnc scripts which sync
 HOME between machines. While in the SSH term, do this:
 
@@ -81,7 +80,6 @@ HOME between machines. While in the SSH term, do this:
 
 Git Repositories
 ----------------
-
 Set up the remote git repositories [(article)](http://tumblr.intranation.com/post/766290565/how-set-up-your-own-private-git-server-linux).
 First, make sure the repositories listed in `cayuga/conf/git_repos.list` is
 correct.  Then run:
