@@ -94,12 +94,7 @@ Checkout the `docs/` for setting up git repos.
 
 CouchDB
 -------
-First, make sure the `cayuga` repository is up to date, then just run the
-setup script.
-
-    cd ~/cayuga
-    git pull origin master
-    bin/setup_couchdb
+Checkout the `docs/` for more info on installing and running CouchDB.
 
 
 Node.js Web Server
