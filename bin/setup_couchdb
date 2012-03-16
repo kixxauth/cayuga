@@ -1,0 +1,13 @@
+#!/bin/bash
+THISDIR="$(cd `dirname "$0"` && pwd)"
+
+COUCHBIN="/opt/couchdb"
+
+"$THISDIR/install_couchdb" || \
+    fail "Unable to install CouchDB"
+
+sudo useradd --system couchdb
+
+sudo chown -R couchdb:couchdb $COUCHBIN
+
+echo "You must log out and log back in again for these changes to take affect."

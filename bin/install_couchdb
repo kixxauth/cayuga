@@ -1,0 +1,40 @@
+#!/bin/bash
+THISDIR="$(cd `dirname "$0"` && pwd)"
+ROOTDIR="$( dirname "$THISDIR" )"
+LIBDIR="$ROOTDIR/lib"
+
+COUCHDIR="/tmp/couchdb_install"
+COUCHBIN="/opt/couchdb"
+
+source "$LIBDIR/utils.sh"
+
+main () {
+    if [ -f "$COUCHBIN/bin/couchdb" ]; then
+        sudo "$COUCHBIN/bin/couchdb" -V
+        echo "CouchDB installed"
+        exit
+    fi
+
+    sudo apt-get install --yes make gcc zlib1g-dev libssl-dev rake
+    fetch || fail "Unable to fetch CouchDB"
+
+    if ! [ -d "$COUCHBIN" ]; then
+        sudo mkdir -p -- "$COUCHBIN" || fail "couldn't create $COUCHBIN"
+    fi
+
+    cd "$COUCHDIR/build-couchdb"
+    sudo rake install="$COUCHBIN" || fail "Unable to build CouchDB"
+    sudo rm -rf "$COUCHDIR"
+}
+
+fetch () {
+    sudo rm -rf "$COUCHDIR"
+    ensure_dir "$COUCHDIR"
+    cd "$COUCHDIR"
+    git clone git://github.com/iriscouch/build-couchdb
+    cd "$COUCHDIR/build-couchdb"
+    git submodule init
+    git submodule update
+}
+
+main "$@"

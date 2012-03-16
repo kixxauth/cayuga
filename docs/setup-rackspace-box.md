@@ -81,3 +81,26 @@ HOME between machines. While in the SSH term, do this:
 Git Repositories
 ----------------
 Checkout the `docs/` for setting up git repos.
+
+
+CouchDB
+-------
+First, make sure the `cayuga` repository is up to date, then just run the
+setup script.
+
+    cd ~/cayuga
+    git pull origin master
+    bin/setup_couchdb
+
+
+Node.js Web Server
+------------------
+First, make sure the `cayuga` repository is up to date, then just run the
+setup script.
+
+    cd ~/cayuga
+    git pull origin master
+    bin/setup_node_platform
+
+This will install Node.js, CoffeeScript, and create the nodeserver user and
+permissions.

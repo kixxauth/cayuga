@@ -1,0 +1,20 @@
+#!/bin/bash
+THISDIR="$(cd `dirname "$0"` && pwd)"
+ROOTDIR="$( dirname "$THISDIR" )"
+LIBDIR="$ROOTDIR/lib"
+
+PLATFORM="/srv/http/platform.x"
+APPDIR="$PLATFORM/applications"
+
+source "$LIBDIR/utils.sh"
+
+"$THISDIR/install_node" || \
+    fail "Unable to install Node.js"
+
+sudo useradd --system nodeserver
+
+sudo mkdir --parents $APPDIR
+sudo chown -R nodeserver:nodeserver $PLATFORM
+sudo chmod 770 $PLATFORM
+
+echo "You must log out and log back in again for these changes to take affect."
