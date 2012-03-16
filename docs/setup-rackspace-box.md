@@ -20,6 +20,15 @@ This will install git, clone a read-only copy of the cayuga repository, update
 Ubuntu, and install dependencies.
 
 
+Maintenance Updates
+-------------------
+To keep the sytem updated, jut pull the latest repo and re-run the bootstrap script.
+
+    cd ~/cayuga
+    git pull origin master
+    bin/bootstrap_ubuntu
+
+
 Users
 -----
 Then, while still logged in as root, create a named user and a git user.  Use
